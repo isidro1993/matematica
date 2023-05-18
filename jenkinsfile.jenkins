@@ -1,0 +1,35 @@
+pipeline {
+    agent any
+    
+    stages {
+        stage('Checkout') {
+            steps {
+                // Clona o repositório Git que contém o código-fonte do programa
+                git 'https://github.com/isidro1993/calculadora.git'
+            }
+        }
+        
+        stage('Compile') {
+            steps {
+                // Compila o programa Java
+                sh 'Calculadora.java' // Substitua "MeuPrograma.java" pelo nome correto do seu arquivo Java
+            }
+        }
+        
+        stage('Test') {
+            steps {
+                // Executa testes automatizados no programa
+                sh 'java -cp .:junit.jar:hamcrest.jar org.junit.runner.JUnitCore CalculadoraTest'
+
+               //  sh 'java CalculadoraTest' Substitua "MeuProgramaTest" pelo nome correto da classe de teste do seu programa
+            }
+        }
+        
+        stage('Run') {
+            steps {
+                // Executa o programa Java
+                sh 'java Calculadora' // Substitua "MeuPrograma" pelo nome correto da classe principal do seu programa
+            }
+        }
+    }
+}
